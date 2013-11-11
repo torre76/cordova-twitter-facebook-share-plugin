@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.gestionaleauto.plugins.TwitterFacebookSharePlugin"
+    version="1.0.0">
+
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>    
+
+	<name>TwitterFacebookSharePlugin</name>
+	<description>
+		Plugin used to share data on Facebook and Twitter.
+		Mainly built for iOS, it uses mobile application(s) at first try, iOS Social capabilites if app(s) are not available and then fails.
+	</description>
+	<author>Gian Luca Dalla Torre</author>
+	<keywords>social,share,Twitter,Facebook</keywords>
+	<license>LGPL 2.1</license>
+
+	<js-module src="www/GATwitterFacebookShare.js" name="TwitterFacebookSharePlugin">
+    	<clobbers target="GA.TwitterFacebookSharePlugin" />
+	</js-module>
+
+    <!-- ios-specific elements -->
+   	<platform name="ios">
+
+		<source-file src="src/ios/TwitterFacebookSharePlugin.m" />
+        <header-file src="src/ios/TwitterFacebookSharePlugin.h" />
+
+		<config-file target="config.xml" parent="/*">
+                <feature name="TwitterFacebookSharePlugin">
+                        <param name="ios-package" value="TwitterFacebookSharePlugin"/>
+                </feature>
+        </config-file> 
+
+		<framework src="Social.framework" weak="false" />           	
+	</platform>
+
+</plugin>
