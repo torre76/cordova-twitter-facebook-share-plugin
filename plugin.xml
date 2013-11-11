@@ -33,7 +33,7 @@
                 </feature>
         </config-file> 
 
-		<framework src="Social.framework" weak="false" />           	
+		<framework src="Social.framework" />           	
 	</platform>
 
 </plugin>
