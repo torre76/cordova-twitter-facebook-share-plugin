@@ -49,7 +49,7 @@
         }
     }
     
-    __weak SLComposeViewController *svc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    SLComposeViewController *svc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [svc setInitialText: text];
     if (image){
         [svc addImage:image];
@@ -58,20 +58,22 @@
         [svc addURL:url];
     }
     
-    [svc setCompletionHandler:^(SLComposeViewControllerResult result) {
+    SLComposeViewControllerCompletionHandler __block completionHandler=^(SLComposeViewControllerResult result){
         CDVPluginResult* pluginResult;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:FALSE];
-            break;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:FALSE];
+                break;
             case SLComposeViewControllerResultDone:
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:TRUE];
-            break;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:TRUE];
+                break;
         }
+        
         [svc dismissViewControllerAnimated:YES completion:nil];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
+    };
     
+    [svc setCompletionHandler:completionHandler];
     
     [self.viewController presentViewController:svc animated:YES completion:nil];
     
@@ -99,7 +101,7 @@
         }
     }
     
-    __weak SLComposeViewController *svc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    SLComposeViewController *svc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
     [svc setInitialText: text];
     if (image){
         [svc addImage:image];
@@ -108,20 +110,22 @@
         [svc addURL:url];
     }
     
-    [svc setCompletionHandler:^(SLComposeViewControllerResult result) {
+    SLComposeViewControllerCompletionHandler __block completionHandler=^(SLComposeViewControllerResult result){
         CDVPluginResult* pluginResult;
         switch (result) {
             case SLComposeViewControllerResultCancelled:
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:FALSE];
-            break;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:FALSE];
+                break;
             case SLComposeViewControllerResultDone:
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:TRUE];
-            break;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:TRUE];
+                break;
         }
         
         [svc dismissViewControllerAnimated:YES completion:nil];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
+    };
+    
+    [svc setCompletionHandler:completionHandler];
     
     [self.viewController presentViewController:svc animated:YES completion:nil];
 }
